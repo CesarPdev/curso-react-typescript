@@ -1,0 +1,37 @@
+
+
+/* La forma implícita de declarar una variable en TypeScript es la misma de JavaScript:
+
+    export const RandomFox = () => {
+        return <img />
+    }
+
+Esto no se recomienda por ser una forma IMPLÍCITA de declaración
+
+*/
+
+/* Una manera de hacer explícita la declaración de la función o variable sería con el uso de FunctionComponent o FC de React:
+
+    import { FunctionComponent, FC } from 'react'
+
+    export const RandomFox: FunctionComponent = () => {
+        return <img />
+    }
+Esto actualmente no se utiliza por utilizar "ayudantes" de React innecesarios
+*/
+
+/* La forma explícita de declarar una función sería:
+
+export const RandomFox = (): JSX.Element => {
+    return <img />
+}
+
+Esta es la forma que utilizaremos en el curso */
+
+export const RandomFox = (): JSX.Element => {
+
+    const random: number = Math.floor(Math.random() * 123) + 1;
+    const image: string = `https://randomfox.ca/images/${random}.jpg`
+
+    return <img className="w-320 h-auto p-2 rounded-xl" src={image}/>
+}
