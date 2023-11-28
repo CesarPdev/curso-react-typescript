@@ -1,4 +1,4 @@
-
+import React from "react";
 
 /* La forma implícita de declarar una variable en TypeScript es la misma de JavaScript:
 
