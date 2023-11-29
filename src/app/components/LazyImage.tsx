@@ -29,7 +29,10 @@ export const RandomFox = (): JSX.Element => {
 
 Esta es la forma que utilizaremos en el curso */
 
-type LazyImageProps = { src: string }
+type LazyImageProps = {
+    src: string
+    onLazyLoad?: () => void
+}
 type ImageNativeProps = ImgHTMLAttributes<HTMLImageElement>
 type Props = LazyImageProps & ImageNativeProps
 
