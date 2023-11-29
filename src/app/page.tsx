@@ -2,6 +2,7 @@
 import { useState } from "react";
 import type { MouseEventHandler } from "react";
 import { RandomFox } from "./components/RandomFox"
+import Button from "./components/Button";
 
 const random = (): number => Math.floor(Math.random() * 123) + 1;
 
@@ -35,8 +36,8 @@ export default function Home() {
       <p className="text-3xl font-bold py-2">Componente Lazy Image</p>
       <p className="text-center pt-2 pb-4">Un componente genérico de React para cargar imágenes con lazy loading.</p>
       <div className="flex gap-2">
-        <button className="border rounded-md px-2 bg-blue-300 shadow-xl text-white" onClick={addNewFox}>Add new Fox</button>
-        <button className="border rounded-md px-2 bg-blue-300 shadow-xl text-white" onClick={deleteLastFox}>Delete last Fox</button>
+        <Button text="Add new Fox" action={addNewFox} />
+        <Button text="Delete last Fox" action={deleteLastFox} />
       </div>
       {images.map(({ id, url }) => (
         <div key={id} className="p-4">
