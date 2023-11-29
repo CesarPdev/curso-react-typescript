@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from "react"
+import type { ImgHTMLAttributes } from "react"
 
 /* La forma implícita de declarar una variable en TypeScript es la misma de JavaScript:
 
@@ -28,14 +29,16 @@ export const RandomFox = (): JSX.Element => {
 
 Esta es la forma que utilizaremos en el curso */
 
-type Props = { image: string } 
+type LazyImageProps = { src: string }
+type ImageNativeProps = ImgHTMLAttributes<HTMLImageElement>
+type Props = LazyImageProps & ImageNativeProps
 
-export const RandomFox = ({ image }: Props): JSX.Element => {
+export const LazyImage = ({ src, ...imgProps }: Props): JSX.Element => {
 
     const node = useRef<HTMLImageElement>(null)
     
     // Start creating a blank image
-    const [src, setSrc] = useState("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjMyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4=");
+    const [currentSrc, setCurrentSrc] = useState("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjMyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4=");
 
     useEffect(() => {
         // Nuevo observador
@@ -43,7 +46,7 @@ export const RandomFox = ({ image }: Props): JSX.Element => {
             entries.forEach((entry) => {
                 // onIntersection -> load image
                 if (entry.isIntersecting) {
-                    setSrc(image)
+                    setCurrentSrc(src)
                 }
             })
         });
@@ -57,9 +60,13 @@ export const RandomFox = ({ image }: Props): JSX.Element => {
         return () => {
             observer.disconnect()
         };
-    }, []);
+    }, [src]);
 
     return (
-        <img className="max-w-lg h-auto rounded-lg bg-slate-500" ref={node} src={src}/>
+        <img
+            ref={node}
+            src={currentSrc}
+            {...imgProps}
+        />
     );
 }
