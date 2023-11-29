@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useRef, useEffect } from "react"
 
 /* La forma implícita de declarar una variable en TypeScript es la misma de JavaScript:
 
@@ -34,7 +34,28 @@ export const RandomFox = ({ image }: Props): JSX.Element => {
 
     const node = useRef<HTMLImageElement>(null)
 
-    console.log(node)
+    useEffect(() => {
+        // Nuevo observador
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                // onIntersection -> console.log
+                if (entry.isIntersecting) {
+                    console.log('Hey you!')
+                    //node.current.src = image
+                }
+            })
+        });
+
+        // Añadir observador al elemento
+        if (node.current){
+            observer.observe(node.current)
+        };
+
+        // Desconectar
+        return () => {
+            observer.disconnect()
+        };
+    }, []);
 
     return <img className="max-w-lg h-auto p-2 rounded-xl" ref={node} src={image}/>
 
