@@ -1,4 +1,3 @@
-import React from "react";
 
 /* La forma implícita de declarar una variable en TypeScript es la misma de JavaScript:
 
@@ -32,6 +31,6 @@ type Props = { image: string }
 
 export const RandomFox = ({ image }: Props): JSX.Element => {
 
-    return <img className="w-320 h-auto p-2 rounded-xl" src={image}/>
+    return <img className="max-w-lg h-auto p-2 rounded-xl" src={image}/>
 
 }
