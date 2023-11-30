@@ -31,12 +31,12 @@ Esta es la forma que utilizaremos en el curso */
 
 type LazyImageProps = {
     src: string
-    onLazyLoad?: () => void
+    onLazyLoad?: (img: HTMLImageElement) => void
 }
 type ImageNativeProps = ImgHTMLAttributes<HTMLImageElement>
 type Props = LazyImageProps & ImageNativeProps
 
-export const LazyImage = ({ src, ...imgProps }: Props): JSX.Element => {
+export const LazyImage = ({ src, onLazyLoad,...imgProps }: Props): JSX.Element => {
 
     const node = useRef<HTMLImageElement>(null)
     
@@ -48,8 +48,13 @@ export const LazyImage = ({ src, ...imgProps }: Props): JSX.Element => {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 // onIntersection -> load image
-                if (entry.isIntersecting) {
-                    setCurrentSrc(src)
+                if (!entry.isIntersecting || !node.current) {
+                    return;
+                }
+                setCurrentSrc(src)
+                // onLazyLoad
+                if (typeof onLazyLoad === "function") {
+                    onLazyLoad(node.current)
                 }
             })
         });
@@ -63,7 +68,7 @@ export const LazyImage = ({ src, ...imgProps }: Props): JSX.Element => {
         return () => {
             observer.disconnect()
         };
-    }, [src]);
+    }, [src, onLazyLoad]);
 
     return (
         <img

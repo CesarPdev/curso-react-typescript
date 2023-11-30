@@ -6,7 +6,7 @@ import Button from "./components/Button";
 
 const random = (): number => Math.floor(Math.random() * 123) + 1;
 
-const generateId = () => Math.random().toString(36).substring(2, 9);
+const generateId = (): string => Math.random().toString(36).substring(2, 9);
 
 type ImageItem = { id: string, url: string};
 
@@ -39,12 +39,13 @@ export default function Home() {
         <Button text="Add new Fox" action={addNewFox} />
         <Button text="Delete last Fox" action={deleteLastFox} />
       </div>
-      {images.map(({ id, url }) => (
+      {images.map(({ id, url }, index) => (
         <div key={id} className="p-4">
           <LazyImage
             src={url}
             className="max-w-lg h-auto rounded-lg bg-slate-500 cursor-pointer"
             onClick={() => console.log('Putoooooo!')}
+            onLazyLoad={(img) => {console.log(`Image #${index + 1} cargada. Nodo:`, img)}}
           />
         </div>
       ))}
