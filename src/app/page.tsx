@@ -8,15 +8,13 @@ const random = (): number => Math.floor(Math.random() * 123) + 1;
 
 const generateId = (): string => Math.random().toString(36).substring(2, 9);
 
-type ImageItem = { id: string, url: string};
-
 export default function Home() {
   
-  const [images, setImages] = useState<Array<ImageItem>>([]);
+  const [images, setImages] = useState<Array<IFoxImageItem>>([]);
 
   const addNewFox: MouseEventHandler = (event) => {
     event.preventDefault();
-    const newFox: ImageItem = {
+    const newFox: IFoxImageItem = {
       id: generateId(),
       url:`https://randomfox.ca/images/${random()}.jpg`
     };
